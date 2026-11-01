@@ -1,0 +1,23 @@
+{
+  "name": "zombie-smash-phone-console",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Zombie Smash phone console: the handheld shell that plays the game cartridge on iPhone, Android and the web.",
+  "scripts": {
+    "test": "ZS_WWW=www node tests/upgrade.test.cjs && ZS_WWW=www node tests/release.test.cjs && ZS_WWW=www node tests/retro.test.cjs",
+    "build:www": "node scripts/assemble-www.mjs",
+    "sync": "npm run build:www && cap sync"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

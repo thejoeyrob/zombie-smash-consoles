@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Zombie Smash</string>
+    <string name="title_activity_main">Zombie Smash</string>
+    <string name="package_name">com.thejoeyrob.zombiesmash</string>
+    <string name="custom_url_scheme">com.thejoeyrob.zombiesmash</string>
+</resources>

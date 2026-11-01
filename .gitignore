@@ -1,0 +1,13 @@
+node_modules/
+phone/www/
+phone/ios/
+phone/android/app/build/
+phone/android/build/
+phone/android/.gradle/
+phone/android/local.properties
+phone/android/app/src/main/assets/public/
+phone/android/app/src/main/assets/capacitor.config.json
+phone/android/app/src/main/assets/capacitor.plugins.json
+*.keystore
+*.jks
+*.p8

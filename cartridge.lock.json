@@ -1,0 +1,6 @@
+{
+  "comment": "The game cartridge version these consoles are built against. Change it on purpose when you take a game update.",
+  "repo": "thejoeyrob/zombie-smash-game",
+  "version": "7.62.4",
+  "api": 1
+}

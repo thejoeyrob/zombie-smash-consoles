@@ -1,0 +1,30 @@
+name: Phone console CI
+on:
+  push:
+    branches: [main]
+    paths: ['phone/**', 'cartridge.lock.json', '.github/workflows/phone-ci.yml']
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Read pinned game version
+        id: lock
+        run: echo "version=$(node -p "require('./cartridge.lock.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Get the game cartridge
+        uses: actions/checkout@v4
+        with:
+          repository: thejoeyrob/zombie-smash-game
+          ref: v${{ steps.lock.outputs.version }}
+          token: ${{ secrets.GAME_REPO_TOKEN }}   # fine-grained token, read access to the game repo (see docs/SETUP.md)
+          path: game
+      - run: cd game && node scripts/build-cartridge.mjs
+      - run: |
+          cd phone
+          npm ci
+          node scripts/assemble-www.mjs ../game/dist/cartridge
+          npm test
