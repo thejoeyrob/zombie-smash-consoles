@@ -8,7 +8,10 @@
 2. Complete identity verification. This can take days, so do it first.
 
 ## 2. Create the app in Play Console
-Create app > name `Zombie Smash`, language, **Game**, **Free**. Accept the declarations.
+Create app > fill in:
+- App name: `Zombie Smash`
+- Package name: **`com.thejoeyrob.zombiesmash`** (exactly; it must match `applicationId` in `phone/android/app/build.gradle`). Press *Check availability*. The package name cannot be changed after the app is created, so do not type anything else.
+- Default language, **App** (not Game category yet; set the category to Games later in the store listing), **Free**. Accept the declarations.
 
 ## 3. Create the upload key (once)
 On any computer with Java (or ask Claude to guide you):
