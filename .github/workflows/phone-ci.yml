@@ -20,7 +20,7 @@ jobs:
         with:
           repository: thejoeyrob/zombie-smash-game
           ref: v${{ steps.lock.outputs.version }}
-          token: ${{ secrets.GAME_REPO_TOKEN }}   # fine-grained token, read access to the game repo (see docs/SETUP.md)
+          token: ${{ secrets.GAME_REPO_TOKEN || github.token }}   # the default token can read the game repo while it is public; add GAME_REPO_TOKEN (docs/SETUP.md) once it is private
           path: game
       - run: cd game && node scripts/build-cartridge.mjs
       - run: |
