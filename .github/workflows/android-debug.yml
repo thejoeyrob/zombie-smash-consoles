@@ -1,0 +1,44 @@
+name: Android debug APK (test install)
+# Builds an unsigned-by-Play debug APK you can install on an Android phone to try the app. No secrets needed.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['phone/**', 'cartridge.lock.json', '.github/workflows/android-debug.yml']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - name: Read pinned game version
+        id: lock
+        run: echo "version=$(node -p "require('./cartridge.lock.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Get the game cartridge
+        uses: actions/checkout@v4
+        with:
+          repository: thejoeyrob/zombie-smash-game
+          ref: v${{ steps.lock.outputs.version }}
+          token: ${{ secrets.GAME_REPO_TOKEN || github.token }}
+          path: game
+      - run: cd game && node scripts/build-cartridge.mjs
+      - name: Assemble, test, sync
+        run: |
+          cd phone
+          npm ci
+          node scripts/assemble-www.mjs ../game/dist/cartridge
+          npm test
+          npx cap sync android
+      - name: Build debug APK
+        working-directory: phone/android
+        env:
+          ANDROID_VERSION_CODE: ${{ github.run_number }}
+        run: ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zombie-smash-android-debug-build${{ github.run_number }}
+          path: phone/android/app/build/outputs/apk/debug/*.apk
