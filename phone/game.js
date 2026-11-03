@@ -333,7 +333,7 @@
     showPanel(
       'menu',
       'GAME MENU',
-      `${game.active ? '<button class="primary-action" data-action="close">RESUME GAME</button>' : '<button class="primary-action" data-action="home">PLAY ZOMBIE SMASH</button>'}<button class="menu-action" data-action="skins">CONSOLE SKINS <small>${SKINS.filter((x) => !skinLocked(x)).length} of ${SKINS.length} unlocked →</small></button>${coffeeOn() ? `<button class="menu-action" data-action="coffee">BUY ME A COFFEE <small>Support the developer →</small></button>` : ''}<button class="menu-action" data-action="board">HIGH SCORES <small>The leaderboard →</small></button><button class="menu-action" data-action="sound">MUSIC & SOUND <small>Set your mix →</small></button><button class="menu-action" data-action="story">THE STORY <small>Replay the comic →</small></button><button class="menu-action" data-action="help">HOW TO PLAY <small>Controls & boosts →</small></button><button class="menu-action" data-action="privacy">PRIVACY POLICY <small>How leaderboard data is used →</small></button>${nativeApp ? '' : '<button class="menu-action" data-action="install">INSTALL GAME <small>Play from Home Screen →</small></button>'}${game.active ? '<button class="menu-action" data-action="restart">NEW GAME <small>Start over as the same player →</small></button><button class="menu-action" data-action="home">HOME SCREEN <small>Back to the title →</small></button>' : ''}${bot ? '<button class="menu-action cheat-entry" data-action="cheats">CHEATS <small>BOT mode · codes →</small></button>' : ''}<p class="menu-note">${run ? 'Playing as ' + esc(run.name) : 'Zombie Smash'} · v${APP_VER}<br>Portrait arcade · Joey Rob vs Dr Mantis</p>`,
+      `${game.active ? '<button class="primary-action" data-action="close">RESUME GAME</button>' : '<button class="primary-action" data-action="home">PLAY ZOMBIE SMASH</button>'}<button class="menu-action" data-action="skins">CONSOLE SKINS <small>${SKINS.filter((x) => !skinLocked(x)).length} of ${SKINS.length} unlocked →</small></button>${coffeeOn() ? `<button class="menu-action" data-action="coffee">BUY ME A COFFEE <small>Support the developer →</small></button>` : ''}<button class="menu-action" data-action="board">HIGH SCORES <small>The leaderboard →</small></button><button class="menu-action" data-action="backdrop">BACKGROUND <small>${BACKDROP_LABEL[backdropNow()]} · tap to change →</small></button><button class="menu-action" data-action="sound">MUSIC & SOUND <small>Set your mix →</small></button><button class="menu-action" data-action="story">THE STORY <small>Replay the comic →</small></button><button class="menu-action" data-action="help">HOW TO PLAY <small>Controls & boosts →</small></button><button class="menu-action" data-action="privacy">PRIVACY POLICY <small>How leaderboard data is used →</small></button>${nativeApp ? '' : '<button class="menu-action" data-action="install">INSTALL GAME <small>Play from Home Screen →</small></button>'}${game.active ? '<button class="menu-action" data-action="restart">NEW GAME <small>Start over as the same player →</small></button><button class="menu-action" data-action="home">HOME SCREEN <small>Back to the title →</small></button>' : ''}${bot ? '<button class="menu-action cheat-entry" data-action="cheats">CHEATS <small>BOT mode · codes →</small></button>' : ''}<p class="menu-note">${run ? 'Playing as ' + esc(run.name) : 'Zombie Smash'} · v${APP_VER}<br>Portrait arcade · Joey Rob vs Dr Mantis</p>`,
     );
   }
   // A thank-you screen shown after PRESS START, before the story. Web version only: a Buy Me a Coffee link.
@@ -1773,6 +1773,12 @@
       case 'board':
         board();
         break;
+      case 'backdrop':
+        write('zs-backdrop', BACKDROPS[(BACKDROPS.indexOf(backdropNow()) + 1) % BACKDROPS.length]);
+        applyBackdrop();
+        panel = null; // menu() closes itself when already open; clear the flag so it redraws with the new label
+        menu();
+        break;
       case 'sound':
         sound();
         break;
@@ -1915,6 +1921,11 @@
   }
   ZSConsole.apply();
   applyTopper(read('zs7-topper', 'yellow'));
+  const BACKDROPS = ['wall', 'color', 'black'],
+    BACKDROP_LABEL = { wall: 'Wallpaper', color: 'Console colour', black: 'Black' };
+  const backdropNow = () => (BACKDROPS.includes(read('zs-backdrop', 'wall')) ? read('zs-backdrop', 'wall') : 'wall');
+  const applyBackdrop = () => { document.body.dataset.backdrop = backdropNow(); };
+  applyBackdrop();
   applySkin(read('zs7-skin', 'retro-handheld'));
   fetch('./skins-extra.json')
     .then((r) => r.json())

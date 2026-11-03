@@ -2950,3 +2950,16 @@ body[data-topper]:not([data-topper="yellow"]) .stick-knob { --ball: var(--topper
 .topper-choice.selected { border-color: #f5d18b; background: #1b2824; }
 .topper-choice b { font: 700 11px Barlow, sans-serif; letter-spacing: 0.04em; }
 .topper-ball { width: 56px; height: 56px; border-radius: 50%; background-repeat: no-repeat; background-size: 318px 106px; background-position: -130.6px -25px; box-shadow: 0 3px 6px #0009; }
+
+/* Console revision 1: BACKGROUND setting. The space around the console (tall phones, tablets, wide windows) shows the
+   skin colour glow ("color"), a dim character wallpaper ("wall", default) or plain black ("black"). */
+body[data-backdrop="wall"] #bleed {
+  inset: 0;
+  transform: none;
+  filter: none;
+  background:
+    linear-gradient(#0003, #0006),
+    url('./backdrop-wall.webp') center / cover no-repeat;
+}
+body[data-backdrop="black"] #bleed { background: #000; filter: none; transform: none; inset: 0; }
+body[data-backdrop="black"] #bleed:after { display: none; }
