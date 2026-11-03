@@ -16,7 +16,7 @@ Last updated 2026-11-03.
 - The game repo publishes release `v7.62.4`; the consoles pin it in `cartridge.lock.json`.
 
 ## Console revisions
-- c1 (2026-11-03): BACKGROUND setting (Wallpaper default, Console colour, Black) for the space around the console on tall phones and tablets. Wallpaper made by `phone/scripts/make-wallpaper.py` from the cartridge art. Service-worker cache is now `zombie-smash-v<game version>-c<console revision>`; raise the c-number whenever only the console changes.
+- c1 (2026-11-03, brightened same day): BACKGROUND setting (Wallpaper default, Console colour, Black) for the space around the console on tall phones and tablets. Wallpaper made by `phone/scripts/make-wallpaper.py` from the cartridge art. Service-worker cache is now `zombie-smash-v<game version>-c<console revision>`; raise the c-number whenever only the console changes.
 
 ## Next
 1. Install the debug APK on an Android phone and play-test it.

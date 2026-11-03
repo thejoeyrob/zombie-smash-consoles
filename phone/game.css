@@ -2958,7 +2958,7 @@ body[data-backdrop="wall"] #bleed {
   transform: none;
   filter: none;
   background:
-    linear-gradient(#0003, #0006),
+    linear-gradient(#0001, #0004),
     url('./backdrop-wall.webp') center / cover no-repeat;
 }
 body[data-backdrop="black"] #bleed { background: #000; filter: none; transform: none; inset: 0; }

@@ -24,7 +24,7 @@ for i, f in enumerate(arenas):
     im = ImageOps.fit(Image.open(f).convert('RGB'), (tile, tile), Image.LANCZOS)
     base.paste(im, ((i % 2) * tile, (i // 2) * tile), mask)
 base = ImageEnhance.Color(base).enhance(0.7)
-base = ImageEnhance.Brightness(base).enhance(0.55)
+base = ImageEnhance.Brightness(base).enhance(0.85)
 
 # 2. characters: bosses, zombies, Joey, pickups scattered at varied sizes
 names = []
@@ -56,8 +56,8 @@ for f in names:
 
 # 3. dim it so it never competes with the game
 img = canvas.convert('RGB')
-img = ImageEnhance.Brightness(img).enhance(0.62)
-img = ImageEnhance.Color(img).enhance(0.8)
+img = ImageEnhance.Brightness(img).enhance(1.0)
+img = ImageEnhance.Color(img).enhance(0.95)
 out = os.path.join(os.path.dirname(__file__), '..', 'backdrop-wall.webp')
 img.save(out, 'WEBP', quality=62, method=6)
 print('wrote', os.path.abspath(out), os.path.getsize(out) // 1024, 'KB,', len(placed), 'characters')
