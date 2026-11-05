@@ -33,3 +33,21 @@ Check Google's current rules in Play Console (Dashboard > "Set up your app / tes
 2. Store listing: description, screenshots (phone), 512x512 icon, 1024x500 feature graphic.
 3. App content: privacy policy URL (`https://zc2.quest/privacy`), **Data safety** form (same answers as the App Store privacy label: device ID and leaderboard name/score collected for app functionality, not tracking), content rating questionnaire (cartoon violence), target audience (13+ suggested), ads: none.
 4. Support email: the zc2.quest support address.
+
+## 6. Let GitHub upload to Play for you (optional, after the first manual upload)
+Claude cannot log in to Play Console, and you should never share your Google login. The official route is a **service account**:
+1. Play Console > **Setup > API access** > link or create a Google Cloud project, then create a **service account** (Google Cloud Console > IAM > Service accounts > Create; role not needed there). Create a **JSON key** for it and download it.
+2. Back in Play Console > **Users and permissions** > invite the service account's email address and give it permission to **Release to testing tracks** (and **Release apps to production** later) for Zombie Smash.
+3. In `zombie-smash-consoles` > Settings > Secrets > Actions add `PLAY_SERVICE_ACCOUNT_JSON` with the full contents of the JSON key. Never paste it in chat or commit it.
+4. Do the **first** upload by hand (Play Console > Testing > Internal or Closed testing > Create release > upload the `.aab` from the "Android AAB" workflow). Google's API cannot claim a brand-new app.
+5. After that, Actions > **Android upload to Google Play** > Run workflow chooses the track and sends the signed bundle. Leave status on `draft` so you press Publish yourself.
+
+## 7. Store listing assets (ready in `store/play/`)
+| Play Console field | File |
+|---|---|
+| App icon (512x512) | `store/play/graphics/icon-512.png` |
+| Feature graphic (1024x500) | `store/play/graphics/feature-graphic-1024x500.png` |
+| Phone screenshots (2 to 8) | `store/play/screenshots/*.png` (1080x2160, the 2:1 maximum Play allows; sides filled with a blurred copy because the iPhone shots are slightly taller) |
+| Short description (max 80) | `store/play/short-description.txt` |
+| Full description (max 4000) | `store/play/full-description.txt` |
+Also fill in: category Games > Action, contact email support@zc2.quest, website https://zc2.quest, privacy policy https://zc2.quest/privacy.html, Data safety form and content rating as in step 5.
