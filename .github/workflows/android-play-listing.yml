@@ -1,0 +1,43 @@
+name: Android push store listing to Google Play
+# Sends the store text, icon, feature graphic and phone screenshots from store/play/ to Google Play using a service account.
+# Needs the PLAY_SERVICE_ACCOUNT_JSON secret (docs/ANDROID-PLAY-SETUP.md section 6). Run it again whenever store/play/ changes.
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: "Play language code of the listing"
+        default: en-GB
+jobs:
+  listing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secret
+        env:
+          B: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: '[ -n "$B" ] || { echo "PLAY_SERVICE_ACCOUNT_JSON is missing (docs/ANDROID-PLAY-SETUP.md section 6)"; exit 1; }'
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.3" }
+      - run: gem install fastlane --no-document
+      - name: Lay the listing out the way Play expects
+        env:
+          LANG_CODE: ${{ inputs.language }}
+        run: |
+          D="$RUNNER_TEMP/meta/$LANG_CODE"
+          mkdir -p "$D/images/phoneScreenshots"
+          printf 'Zombie Smash' > "$D/title.txt"
+          cp store/play/short-description.txt "$D/short_description.txt"
+          cp store/play/full-description.txt "$D/full_description.txt"
+          cp store/play/graphics/icon-512.png "$D/images/icon.png"
+          cp store/play/graphics/feature-graphic-1024x500.png "$D/images/featureGraphic.png"
+          i=1; for f in store/play/screenshots/*.png; do cp "$f" "$D/images/phoneScreenshots/$i.png"; i=$((i+1)); done
+          find "$RUNNER_TEMP/meta" -type f | sort
+      - name: Send to Google Play
+        env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          printf '%s' "$PLAY_JSON" > "$RUNNER_TEMP/play.json"
+          fastlane supply --json_key "$RUNNER_TEMP/play.json" --package_name com.thejoeyrob.zombiesmash \
+            --metadata_path "$RUNNER_TEMP/meta" --skip_upload_apk --skip_upload_aab --skip_upload_changelogs
+          rm -f "$RUNNER_TEMP/play.json"

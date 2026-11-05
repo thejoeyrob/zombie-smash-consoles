@@ -36,8 +36,8 @@ Check Google's current rules in Play Console (Dashboard > "Set up your app / tes
 
 ## 6. Let GitHub upload to Play for you (optional, after the first manual upload)
 Claude cannot log in to Play Console, and you should never share your Google login. The official route is a **service account**:
-1. Play Console > **Setup > API access** > link or create a Google Cloud project, then create a **service account** (Google Cloud Console > IAM > Service accounts > Create; role not needed there). Create a **JSON key** for it and download it.
-2. Back in Play Console > **Users and permissions** > invite the service account's email address and give it permission to **Release to testing tracks** (and **Release apps to production** later) for Zombie Smash.
+1. In Google Cloud Console (project `zc2-arena` is fine) > **APIs & Services > Library** > enable **Google Play Android Developer API**. Then **IAM & Admin > Service accounts > Create service account** (name `play-publisher`; no roles needed) and add a **JSON key** (Keys tab > Add key > JSON). The file downloads once.
+2. In Play Console > **Users and permissions** > **Invite new users** > paste the service account's email address (it looks like `play-publisher@zc2-arena.iam.gserviceaccount.com`) > give it app permissions for Zombie Smash: **Release to testing tracks**, **Manage store presence**, **View app information**, and later **Release apps to production**. (Play's menus change; if you cannot find the invite option, tell Claude what you see.)
 3. In `zombie-smash-consoles` > Settings > Secrets > Actions add `PLAY_SERVICE_ACCOUNT_JSON` with the full contents of the JSON key. Never paste it in chat or commit it.
 4. Do the **first** upload by hand (Play Console > Testing > Internal or Closed testing > Create release > upload the `.aab` from the "Android AAB" workflow). Google's API cannot claim a brand-new app.
 5. After that, Actions > **Android upload to Google Play** > Run workflow chooses the track and sends the signed bundle. Leave status on `draft` so you press Publish yourself.
@@ -51,3 +51,6 @@ Claude cannot log in to Play Console, and you should never share your Google log
 | Short description (max 80) | `store/play/short-description.txt` |
 | Full description (max 4000) | `store/play/full-description.txt` |
 Also fill in: category Games > Action, contact email support@zc2.quest, website https://zc2.quest, privacy policy https://zc2.quest/privacy.html, Data safety form and content rating as in step 5.
+
+## 8. What the API can and cannot do for you
+**Can (once the service account is set up):** upload new builds to any track (workflow "Android upload to Google Play"), push the store text, icon, feature graphic and screenshots (workflow "Android push store listing to Google Play"), and promote a release between tracks. **Cannot:** the app declarations (Data safety, content rating, target audience, app access, privacy policy), accepting Google's agreements, creating the app, identity verification, or recruiting your 12 closed testers. Those are one-time forms in Play Console.
