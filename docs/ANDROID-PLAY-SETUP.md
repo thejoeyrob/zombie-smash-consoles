@@ -47,7 +47,7 @@ Claude cannot log in to Play Console, and you should never share your Google log
 |---|---|
 | App icon (512x512) | `store/play/graphics/icon-512.png` |
 | Feature graphic (1024x500) | `store/play/graphics/feature-graphic-1024x500.png` |
-| Phone screenshots (2 to 8) | `store/play/screenshots/*.png` (1080x2160, the 2:1 maximum Play allows; sides filled with a blurred copy because the iPhone shots are slightly taller) |
+| Phone screenshots (2 to 8) | `store/play/screenshots/*.png` (1080x1920, exactly 9:16 as the Play form requires; sides filled with a blurred copy because the iPhone shots are taller) |
 | Short description (max 80) | `store/play/short-description.txt` |
 | Full description (max 4000) | `store/play/full-description.txt` |
 Also fill in: category Games > Action, contact email support@zc2.quest, website https://zc2.quest, privacy policy https://zc2.quest/privacy.html, Data safety form and content rating as in step 5.
