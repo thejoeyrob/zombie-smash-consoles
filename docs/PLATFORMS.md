@@ -4,7 +4,7 @@ Last updated 2026-11-03.
 
 | Console | Where | Game | State |
 |---|---|---|---|
-| iPhone (live line) | old repo `ZC-Zombie-Smash`, build 142 | 7.62.4 | In App Review. Untouched. |
+| iPhone (live line) | old repo `ZC-Zombie-Smash`, app `com.thejoeyrob.zombiesmash2`, build 144 | 7.62.4 | Fresh app record created 2026-11-06 (the first record, `com.thejoeyrob.zombiesmash`, build 142, was removed after 19 days unreviewed). Build 144 submitted for review 2026-11-06 (owner-reported). Listing, notes and screenshots pushed by the old repo's `App Store listing` workflow. |
 | iPhone 1.1 (new line) | `phone/` here | 7.62.4 | Not started. Needs workflow + upgrade test from 142 (same bundle id, same saved data). |
 | Android | `phone/android` | 7.62.4 | Debug APK builds on GitHub (workflow "Android debug APK", run 2, about 110 MB). Not yet installed or played on a real phone. Play bundle workflow not yet run (needs Play account and upload key). |
 | Web (zc2.quest) | old repo `main` / Vercel | **7.22.7 live (stale)** | Waiting for approval to update; later served from this repo. |
@@ -24,3 +24,8 @@ Last updated 2026-11-03.
 3. Move game flow still inside `game.js` into the cartridge (see game repo spec "Known gaps").
 4. iPhone 1.1 pipeline and upgrade-from-142 test.
 5. VR trial: run the cartridge engine inside Godot and check it against the golden run.
+
+## IDs to remember
+- iPhone bundle ID: `com.thejoeyrob.zombiesmash2` (new). The old `com.thejoeyrob.zombiesmash` record is gone.
+- Android application ID: `com.thejoeyrob.zombiesmash` (Google Play). They do not have to match across stores.
+- The iOS and listing workflows (old repo, branch `claude/zombie-smash-deployment-stores-mk88wq`) default to the new iOS bundle ID.
