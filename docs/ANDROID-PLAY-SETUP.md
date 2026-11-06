@@ -46,7 +46,7 @@ Claude cannot log in to Play Console, and you should never share your Google log
 | Play Console field | File |
 |---|---|
 | App icon (512x512) | `store/play/graphics/icon-512.png` |
-| Feature graphic (1024x500) | `store/play/graphics/feature-graphic-1024x500.png` |
+| Feature graphic (1024x500) | `store/play/graphics/feature-graphic-1024x500.png` (made from the owner's key art in `store/art/`; the source is only 719x308, so a larger original would sharpen it) |
 | Phone screenshots (2 to 8) | `store/play/screenshots/*.png` (1080x1920, exactly 9:16 as the Play form requires; sides filled with a blurred copy because the iPhone shots are taller) |
 | Short description (max 80) | `store/play/short-description.txt` |
 | Full description (max 4000) | `store/play/full-description.txt` |
