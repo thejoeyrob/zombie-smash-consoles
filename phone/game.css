@@ -2802,7 +2802,10 @@ body[data-release-skin="retro-handheld"] :is(.stick-track, .stick-knob, .fire-in
    artwork takes them (the element's own size is untouched, so the stick travel and everything else is unchanged). */
 body[data-release-skin="retro-handheld"] :is(#joystick, #fireButton, #grenadeButton, #menuButton) { pointer-events: none; }
 body[data-release-skin="retro-handheld"] :is(#joystick, #fireButton, #grenadeButton, #menuButton)::before { content: ''; position: absolute; pointer-events: auto; background: none; border-radius: 50%; }
-body[data-release-skin="retro-handheld"] #joystick::before { inset: -14.65% -2.17% 10.35% -2.17%; }
+/* c4: bigger thumb pad. The drawn stick is unchanged; the invisible touch area now reaches the shell edge on the left, just under the
+   game screen on top, the speaker strip below, and stops short of the MENU and grenade pads on the right (console points:
+   x 14-140, y 494-636 instead of 35-130 by 512-607). */
+body[data-release-skin="retro-handheld"] #joystick::before { inset: -36.03% -13.53% -21.4% -26.16%; border-radius: 24px; }
 body[data-release-skin="retro-handheld"] #fireButton::before { inset: -7.16% 3.4% 13.96% 3.4%; }
 body[data-release-skin="retro-handheld"] #grenadeButton::before { inset: -7.2%; }
 body[data-release-skin="retro-handheld"] #menuButton::before { inset: -10.5% -13.2%; border-radius: 999px; }
