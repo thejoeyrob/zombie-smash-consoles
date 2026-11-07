@@ -36,7 +36,7 @@ jobs:
       - name: Build debug APK
         working-directory: phone/android
         env:
-          ANDROID_VERSION_CODE: ${{ github.run_number }}
+          ANDROID_VERSION_CODE: ${{ github.run_number + 100 }}
         run: ./gradlew --no-daemon assembleDebug
       - uses: actions/upload-artifact@v4
         with:

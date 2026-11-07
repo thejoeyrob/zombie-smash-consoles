@@ -16,7 +16,11 @@ Last updated 2026-11-03.
 - The game repo publishes release `v7.62.4`; the consoles pin it in `cartridge.lock.json`.
 
 ## Console revisions
+- c2 (2026-11-07): hidden screen diagnostics (tap the top-right corner of the screen 5 times within 3 seconds; tap the box to close). Used to find out what size window a phone really gives the app.
 - c1 (2026-11-03, brightened same day): BACKGROUND setting (Wallpaper default, Console colour, Black) for the space around the console on tall phones and tablets. Wallpaper made by `phone/scripts/make-wallpaper.py` from the cartridge art. Service-worker cache is now `zombie-smash-v<game version>-c<console revision>`; raise the c-number whenever only the console changes.
+
+## Android version codes
+Workflows use `run number + 100`, so builds start at 101 and always beat the first uploaded bundle (version code 2). Never reuse a code; Play rejects duplicates.
 
 ## Next
 1. Install the debug APK on an Android phone and play-test it.

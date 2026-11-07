@@ -1862,6 +1862,42 @@
         break;
     }
   });
+
+  // Hidden screen diagnostics (console revision c2): tap the top-right corner of the screen 5 times within 3 seconds.
+  // Shows the window sizes the phone reports so layout problems on a particular device can be understood. Tap the box to close it.
+  (() => {
+    let taps = [];
+    addEventListener('pointerdown', (e) => {
+      if (e.clientX < innerWidth - 90 || e.clientY > 90) return;
+      const now = performance.now();
+      taps = taps.filter((t) => now - t < 3000).concat(now);
+      if (taps.length < 5) return;
+      taps = [];
+      const old = document.getElementById('diagBox');
+      if (old) return old.remove();
+      const r = (el) => { const b = document.getElementById(el)?.getBoundingClientRect(); return b ? [b.left, b.top, b.width, b.height].map((v) => Math.round(v)).join(',') : 'none'; };
+      const root = getComputedStyle(document.documentElement), vv = window.visualViewport;
+      const lines = [
+        'ZOMBIE SMASH SCREEN DIAGNOSTICS (c2)',
+        'inner ' + innerWidth + 'x' + innerHeight + '  outer ' + outerWidth + 'x' + outerHeight,
+        'client ' + document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight,
+        'screen ' + screen.width + 'x' + screen.height + '  dpr ' + devicePixelRatio,
+        'visualViewport ' + (vv ? [vv.width, vv.height, vv.offsetLeft, vv.offsetTop, vv.scale].map((v) => Math.round(v * 100) / 100).join(',') : 'none'),
+        'safe top/bottom ' + root.getPropertyValue('--safe-top') + ' / ' + root.getPropertyValue('--safe-bottom'),
+        'console-scale ' + root.getPropertyValue('--console-scale'),
+        'bleed [x,y,w,h] ' + r('bleed'),
+        'cabinet [x,y,w,h] ' + r('cabinet'),
+        'platform ' + (window.Capacitor?.getPlatform?.() || 'web') + '  protocol ' + location.protocol,
+        navigator.userAgent,
+      ];
+      const box = document.createElement('pre');
+      box.id = 'diagBox';
+      box.textContent = lines.join('\n');
+      box.style.cssText = 'position:fixed;z-index:99999;left:6px;right:6px;top:30px;margin:0;padding:10px;background:#000d;color:#7dff7d;font:11px/1.35 monospace;white-space:pre-wrap;word-break:break-all;border:1px solid #7dff7d;border-radius:8px';
+      box.onclick = () => box.remove();
+      document.body.appendChild(box);
+    }, true);
+  })();
   addEventListener('resize', () => {
     lastFit = '';
     fitDirty = true;
