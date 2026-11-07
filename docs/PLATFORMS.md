@@ -16,6 +16,7 @@ Last updated 2026-11-03.
 - The game repo publishes release `v7.62.4`; the consoles pin it in `cartridge.lock.json`.
 
 ## Console revisions
+- c3 (2026-11-07): joystick and FIRE hardening for Android (and iPhone/iPad): a new finger takes over a stale stick; a watchdog releases the stick or FIRE when the phone has quietly dropped the touch; they release when the app goes to the background; a rejected pointer capture releases instead of leaving the stick held. Verified with real touch events in a browser; not yet on a real phone.
 - c2 (2026-11-07): hidden screen diagnostics (tap the top-right corner of the screen 5 times within 3 seconds; tap the box to close). Used to find out what size window a phone really gives the app.
 - c1 (2026-11-03, brightened same day): BACKGROUND setting (Wallpaper default, Console colour, Black) for the space around the console on tall phones and tablets. Wallpaper made by `phone/scripts/make-wallpaper.py` from the cartridge art. Service-worker cache is now `zombie-smash-v<game version>-c<console revision>`; raise the c-number whenever only the console changes.
 

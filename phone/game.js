@@ -1439,7 +1439,9 @@
     stick.setAttribute('aria-valuenow', Math.round(touchAxis * 100));
   }
   stick.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0 || stickId !== null) return;
+    if (e.button !== 0) return;
+    // Latest finger wins: if an earlier lift was ever missed, a fresh touch must not be ignored.
+    if (stickId !== null) releaseStick();
     if (awaitStart || storyActive) {
       e.preventDefault();
       startNow();
@@ -1452,7 +1454,13 @@
     stickHist = [[performance.now(), e.clientX]];
     stickVal = 0;
     touchAxis = 0;
-    stick.setPointerCapture(e.pointerId);
+    try {
+      stick.setPointerCapture(e.pointerId);
+    } catch {
+      // The finger was already gone (quick tap, multi-touch, system gesture): never leave the stick marked as held.
+      releaseStick();
+      return;
+    }
     audio.unlock();
   });
   stick.addEventListener('pointermove', moveStick);
@@ -1494,8 +1502,24 @@
     if (stickId !== null) releaseStick();
     if (fireId !== null) releaseFire();
   });
+  // Android (gesture navigation, edge panels, split screen) and iPhone can end a touch without telling the page.
+  // A pointer the browser no longer captures is no longer down, so let go of the stick or FIRE. Also let go when the app
+  // goes to the background.
+  setInterval(() => {
+    try {
+      if (stickId !== null && !stick.hasPointerCapture(stickId)) releaseStick();
+      if (fireId !== null && !$('fireButton').hasPointerCapture(fireId)) releaseFire();
+    } catch {}
+  }, 120);
+  for (const type of ['visibilitychange', 'pagehide'])
+    addEventListener(type, () => {
+      if (type === 'visibilitychange' && !document.hidden) return;
+      if (stickId !== null) releaseStick();
+      if (fireId !== null) releaseFire();
+    });
   $('fireButton').addEventListener('pointerdown', (e) => {
-    if (e.button !== 0 || fireId !== null) return;
+    if (e.button !== 0) return;
+    if (fireId !== null) releaseFire();
     if (panel === 'start') {
       e.preventDefault();
       audio.ui('chime');
@@ -1517,7 +1541,12 @@
     if (paused || !game.active) return;
     e.preventDefault();
     fireId = e.pointerId;
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      releaseFire();
+      return;
+    }
     touchFire = true;
     e.currentTarget.classList.add('pressed');
     audio.unlock();
