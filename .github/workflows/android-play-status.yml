@@ -24,4 +24,6 @@ jobs:
             echo "== track: $track"
             fastlane run google_play_track_version_codes package_name:com.thejoeyrob.zombiesmash track:$track json_key:"$RUNNER_TEMP/play.json" 2>&1 | grep -E "Result|version|error|Error|Unable" | head -4 || true
           done
+          echo '== details'
+          PACKAGE_NAME=com.thejoeyrob.zombiesmash JSON_KEY="$RUNNER_TEMP/play.json" ruby scripts/play_status.rb || echo 'detail script failed'
           rm -f "$RUNNER_TEMP/play.json"
