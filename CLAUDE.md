@@ -10,3 +10,4 @@ Read `README.md`, `docs/OWNERS-GUIDE.md` and `docs/PLATFORMS.md` first.
 6. Secrets (Apple keys, Android upload key, tokens) live in GitHub secrets only, never in files, commits or chat. Never commit `*.keystore`, `*.jks`, `*.p8`.
 7. Work on a branch; merge to `main` when `npm test` passes. Do not open pull requests unless asked.
 8. Update `docs/PLATFORMS.md` when you finish work.
+9. **Layout lock.** The console (375x667) and the game screen inside it scale together as one unit; characters, menus and controls never scale separately and the game's aspect ratio never changes. Anything outside that unit (background, window handling, extra panels) may change, but before you push a console change run `node scripts/layout-lock.cjs` in `phone/` (needs Playwright and an assembled `www/`); it must report 0 differences. Re-record the baseline only for a layout change the owner asked for.
