@@ -15,6 +15,20 @@ begin
       puts "    release name=#{r.name.inspect} status=#{r.status} versionCodes=#{r.version_codes.inspect} userFraction=#{r.user_fraction.inspect}"
     end
   end
+  begin
+    d = api.get_edit_details(pkg, edit.id)
+    puts "DETAILS default language=#{d.default_language.inspect} contactEmail set=#{!d.contact_email.to_s.empty?} contactWebsite=#{d.contact_website.inspect}"
+  rescue => e
+    puts "DETAILS could not be read (#{e.class})"
+  end
+  puts 'LISTINGS'
+  begin
+    (api.list_edit_listings(pkg, edit.id).listings || []).each do |l|
+      puts "- #{l.language}: title=#{l.title.inspect} short=#{l.short_description.to_s.length} chars full=#{l.full_description.to_s.length} chars"
+    end
+  rescue => e
+    puts "listings could not be read (#{e.class})"
+  end
   puts 'TESTERS'
   %w[internal alpha].each do |track|
     begin
