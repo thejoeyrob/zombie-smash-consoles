@@ -67,9 +67,8 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          ANDROID_VERSION_CODE: ${{ github.run_number + 100 }}
           ANDROID_VERSION_NAME: ${{ inputs.version_name }}
-        run: ./gradlew --no-daemon bundleRelease
+        run: ANDROID_VERSION_CODE=$((GITHUB_RUN_NUMBER + 100)) ./gradlew --no-daemon bundleRelease
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
