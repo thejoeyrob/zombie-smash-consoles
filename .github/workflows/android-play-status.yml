@@ -1,0 +1,27 @@
+name: Android Google Play status check
+# Read-only check that the service account works: prints which versions are on each Play track.
+# Needs the PLAY_SERVICE_ACCOUNT_JSON secret (docs/ANDROID-PLAY-SETUP.md section 6).
+on:
+  workflow_dispatch:
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check secret
+        env:
+          B: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: '[ -n "$B" ] || { echo "PLAY_SERVICE_ACCOUNT_JSON is missing (docs/ANDROID-PLAY-SETUP.md section 6)"; exit 1; }'
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.3" }
+      - run: gem install fastlane --no-document
+      - name: Read the tracks
+        env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          printf '%s' "$PLAY_JSON" > "$RUNNER_TEMP/play.json"
+          for track in internal alpha beta production; do
+            echo "== track: $track"
+            fastlane run google_play_track_version_codes package_name:com.thejoeyrob.zombiesmash track:$track json_key:"$RUNNER_TEMP/play.json" 2>&1 | grep -E "Result|version|error|Error|Unable" | head -4 || true
+          done
+          rm -f "$RUNNER_TEMP/play.json"

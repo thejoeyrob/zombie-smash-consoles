@@ -54,3 +54,10 @@ Also fill in: category Games > Action, contact email support@zc2.quest, website 
 
 ## 8. What the API can and cannot do for you
 **Can (once the service account is set up):** upload new builds to any track (workflow "Android upload to Google Play"), push the store text, icon, feature graphic and screenshots (workflow "Android push store listing to Google Play"), and promote a release between tracks. **Cannot:** the app declarations (Data safety, content rating, target audience, app access, privacy policy), accepting Google's agreements, creating the app, identity verification, or recruiting your 12 closed testers. Those are one-time forms in Play Console.
+
+## 9. Quick start for write access (service account)
+1. Google Cloud Console (project `zc2-arena`): **APIs & Services > Library** > enable **Google Play Android Developer API**.
+2. **IAM & Admin > Service accounts > Create** (`play-publisher`, no roles), then **Keys > Add key > Create new key > JSON**. The file downloads once.
+3. Play Console > **Users and permissions > Invite new users** > paste the service account email. Under app permissions for Zombie Smash tick: **View app information**, **Release to testing tracks**, **Manage store presence**. Leave production release and admin permissions off for now.
+4. GitHub `zombie-smash-consoles` > Settings > Secrets > Actions > new secret `PLAY_SERVICE_ACCOUNT_JSON` = the whole JSON file contents.
+5. Run Actions > **Android Google Play status check** to prove it works (read-only). Then **Android push store listing to Google Play** and **Android upload to Google Play** work too.
