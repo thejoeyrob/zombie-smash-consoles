@@ -1314,6 +1314,8 @@
     trackStick(axis);
     game.setInput(axis, fire);
   }
+  // Cover banner above the console on tall screens: shown from 64 px of spare height, never taller than 190 px.
+  const BANNER_MIN = 64, BANNER_MAX = 190;
   function fit() {
     const root = document.documentElement,
       focused = /INPUT|TEXTAREA/.test(document.activeElement?.tagName || ''),
@@ -1340,7 +1342,11 @@
       bottom = parseFloat(safe.getPropertyValue('--safe-bottom')) || 0,
       usableHeight = Math.max(1, h - top - bottom),
       scale = Math.min(w / 375, usableHeight / 667),
-      T = top + (usableHeight - 667 * scale) / 2,
+      // Tall screens: the console sits at the bottom and the spare height above it becomes a game-box cover banner.
+      // The console is never resized or stretched; with little spare height there is no banner and it stays centred.
+      spare = usableHeight - 667 * scale,
+      bannerH = spare >= BANNER_MIN ? Math.min(spare, BANNER_MAX) : 0,
+      T = bannerH ? top + usableHeight - 667 * scale : top + spare / 2,
       shift = 0,
       key = w + 'x' + h + '@' + scale.toFixed(4) + '/' + top + '/' + bottom;
     if (key === lastFit) return;
@@ -1350,6 +1356,12 @@
     document.body.classList.toggle('sb-overlap', shift > 6);
     $('cabinet').style.left = w / 2 + 'px';
     $('cabinet').style.top = T + 333.5 * scale + 'px';
+    const banner = $('coverBanner');
+    banner.hidden = !bannerH;
+    banner.classList.toggle('cb-short', bannerH / scale < 110);
+    if (bannerH) {
+      banner.style.cssText = `left:${w / 2 - (375 * scale) / 2}px;top:${T - bannerH}px;width:${375 * scale}px;height:${bannerH}px;--cb-s:${scale};--cb-h:${bannerH / scale}`;
+    }
     renderer.resize();
   }
   let lastDraw = -Infinity, lastHud = -Infinity;
