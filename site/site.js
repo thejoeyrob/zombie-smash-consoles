@@ -4,6 +4,7 @@ const LINKS = {
   googlePlay: '',          // the public Google Play link, once production access is granted
   web: 'https://play.zc2.quest',
   androidTest: 'https://play.google.com/apps/testing/com.thejoeyrob.zombiesmash',
+  testerGroup: '',         // the Google Group page testers join first, e.g. https://groups.google.com/g/zombie-smash-testers
 };
 const SUPPORT = 'support@zc2.quest';
 
@@ -12,6 +13,7 @@ for (const a of document.querySelectorAll('[data-store]')) {
   if (url) { a.href = url; a.removeAttribute('aria-disabled'); a.querySelector('.soon')?.remove(); }
   else { a.setAttribute('aria-disabled', 'true'); a.removeAttribute('href'); }
 }
+if (LINKS.testerGroup) { const t = document.getElementById('testers'); if (t) t.hidden = false; }
 for (const a of document.querySelectorAll('[data-link]')) { const u = LINKS[a.dataset.link]; if (u) a.href = u; else a.hidden = true; }
 
 // Contact form: opens the visitor's own email app with the message filled in, addressed to support.

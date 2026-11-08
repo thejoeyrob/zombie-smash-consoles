@@ -1,0 +1,34 @@
+name: Android attach tester group to Google Play
+# Attaches a Google Group to a testing track. Anyone who joins that group becomes a tester automatically.
+# Needs PLAY_SERVICE_ACCOUNT_JSON (docs/ANDROID-PLAY-SETUP.md section 6) with "Release to testing tracks" permission.
+on:
+  workflow_dispatch:
+    inputs:
+      group:
+        description: "Google Group email address, e.g. zombie-smash-testers@googlegroups.com"
+        required: true
+      track:
+        description: "Play track"
+        default: alpha
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secret
+        env:
+          B: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: '[ -n "$B" ] || { echo "PLAY_SERVICE_ACCOUNT_JSON is missing"; exit 1; }'
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.3" }
+      - run: gem install fastlane --no-document
+      - name: Attach the group
+        env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          GROUP: ${{ inputs.group }}
+          TRACK: ${{ inputs.track }}
+        run: |
+          printf '%s' "$PLAY_JSON" > "$RUNNER_TEMP/play.json"
+          PACKAGE_NAME=com.thejoeyrob.zombiesmash JSON_KEY="$RUNNER_TEMP/play.json" ruby scripts/play_set_tester_group.rb
+          rm -f "$RUNNER_TEMP/play.json"
