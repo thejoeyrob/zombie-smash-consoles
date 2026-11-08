@@ -4,7 +4,7 @@ Last updated 2026-11-03.
 
 | Console | Where | Game | State |
 |---|---|---|---|
-| iPhone (live line) | old repo `ZC-Zombie-Smash`, app `com.thejoeyrob.zombiesmash2`, build 144 | 7.62.4 | Fresh app record created 2026-11-06 (the first record, `com.thejoeyrob.zombiesmash`, build 142, was removed after 19 days unreviewed). Build 144 submitted for review 2026-11-06 (owner-reported). Listing, notes and screenshots pushed by the old repo's `App Store listing` workflow. |
+| iPhone (live line) | old repo `ZC-Zombie-Smash`, app `com.thejoeyrob.zombiesmash2`, build 144 | 7.62.4 | Fresh app record created 2026-11-06 (the first record, `com.thejoeyrob.zombiesmash`, build 142, was removed after 19 days unreviewed). Build 144 submitted for review 2026-11-06 (owner-reported). **Approved by Apple 2026-11-07** (In Review, then Pending Developer Release, per the owner's App Store Connect screenshot 2026-11-08). The owner must press Release; the store page goes live within about a day after that. Listing, notes and screenshots pushed by the old repo's `App Store listing` workflow. |
 | iPhone 1.1 (new line) | `phone/` here | 7.62.4 | Not started. Needs workflow + upgrade test from 142 (same bundle id, same saved data). |
 | Android | `phone/android` | 7.62.4 | Debug APK builds on GitHub (workflow "Android debug APK", run 2, about 110 MB). Not yet installed or played on a real phone. Play bundle workflow not yet run (needs Play account and upload key). |
 | Web (zc2.quest) | old repo `main` / Vercel | **7.22.7 live (stale)** | Waiting for approval to update; later served from this repo. |
