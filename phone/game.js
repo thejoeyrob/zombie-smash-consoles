@@ -941,6 +941,9 @@
       }
     }
     if (type === 'entrance' || type === 'fight') audio.setBoss(data.id);
+    // The fight theme starts the moment the fight (stage 1) does and runs until the boss-down or Joey-down music takes over.
+    // Before this the warning track stayed on through all of stage 1 and the boss theme only arrived at the stage 2 change.
+    if (type === 'fight') audio.playMusic('boss');
     if (type === 'wave') audio.setWave(data.wave);
     // The boss warning score plays through the whole arrival comic; the fight music starts when the fight does.
     if (type === 'music') {
@@ -967,8 +970,9 @@
       weaponUse: () => 'switch',
     };
     const vol = { kill: 0.9, hit: 0.7, shot: 0.85, ricochet: 0.8, entrance: 0.8, clear: 0.9 };
-    if (type === 'bossDown') audio.stinger('victory');
-    else if (type === 'death') audio.stinger('defeat');
+    // The boss theme runs until the victory jingle (boss down) or the defeat music (Joey down); wave / game-over music follows it.
+    if (type === 'bossDown') audio.stinger('victory', 'main');
+    else if (type === 'death') audio.stinger('defeat', 'over');
     else if (type === 'wave' && data.wave > 1) audio.sting('wavestart');
     else if (pick[type]) audio.sfx(pick[type](), vol[type] ?? 1);
     buzz(type, data);

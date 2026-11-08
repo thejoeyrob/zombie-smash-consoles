@@ -1,6 +1,6 @@
 # Platform status (consoles repo)
 
-Last updated 2026-11-03.
+Last updated 2026-11-08.
 
 | Console | Where | Game | State |
 |---|---|---|---|
@@ -16,6 +16,7 @@ Last updated 2026-11-03.
 - The game repo publishes release `v7.62.4`; the consoles pin it in `cartridge.lock.json`.
 
 ## Console revisions
+- c5 (2026-11-08): boss music routing in the phone console's sound output. The `fight` event now starts the boss theme at stage 1 (before, the warning track stayed on through all of stage 1 and the boss theme only arrived at the stage 2 change). The victory jingle hands over to the wave music and the defeat music to the game-over music, so the boss theme no longer comes back after the jingle. Sound output only; no game rules. The VR console needs the same routing. Found and checked by replaying a boss fight in a browser with a spy on the music calls (before: warning, then boss at stage 2; after: boss from stage 1).
 - c4 (2026-11-07): bigger joystick touch pad on the default skin (about 126x142 console points instead of 94x94, a rounded rectangle reaching the shell edge, the speaker strip and just under the screen). The drawn stick, the stick travel and every other control are unchanged; `phone/scripts/hit-test.cjs` proves which control owns each point. Other skins keep their old pad.
 - c3 (2026-11-07): joystick and FIRE hardening for Android (and iPhone/iPad): a new finger takes over a stale stick; a watchdog releases the stick or FIRE when the phone has quietly dropped the touch; they release when the app goes to the background; a rejected pointer capture releases instead of leaving the stick held. Verified with real touch events in a browser; not yet on a real phone.
 - c2 (2026-11-07): hidden screen diagnostics (tap the top-right corner of the screen 5 times within 3 seconds; tap the box to close). Used to find out what size window a phone really gives the app.
