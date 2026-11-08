@@ -2966,3 +2966,7 @@ body[data-backdrop="wall"] #bleed {
 }
 body[data-backdrop="black"] #bleed { background: #000; filter: none; transform: none; inset: 0; }
 body[data-backdrop="black"] #bleed:after { display: none; }
+
+/* Cover banner (tall screens): the game-box cover above the console. Placed and sized by fit() in game.js. */
+#coverBanner { position: fixed; z-index: 0; pointer-events: none; display: block; object-fit: cover; border-radius: 12px 12px 0 0; box-shadow: 0 -6px 30px #0008; }
+#coverBanner[hidden] { display: none; }

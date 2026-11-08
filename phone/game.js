@@ -1336,7 +1336,11 @@
       bottom = parseFloat(safe.getPropertyValue('--safe-bottom')) || 0,
       usableHeight = Math.max(1, h - top - bottom),
       scale = Math.min(w / 375, usableHeight / 667),
-      T = top + (usableHeight - 667 * scale) / 2,
+      // Tall screens: when the spare height above the console fits the whole cover banner (375x125 console units),
+      // the console sits at the bottom and the banner above it. The console is never resized; otherwise it stays centred.
+      spare = usableHeight - 667 * scale,
+      bannerH = spare >= 125 * scale ? 125 * scale : 0,
+      T = bannerH ? top + usableHeight - 667 * scale : top + spare / 2,
       shift = 0,
       key = w + 'x' + h + '@' + scale.toFixed(4) + '/' + top + '/' + bottom;
     if (key === lastFit) return;
@@ -1346,6 +1350,9 @@
     document.body.classList.toggle('sb-overlap', shift > 6);
     $('cabinet').style.left = w / 2 + 'px';
     $('cabinet').style.top = T + 333.5 * scale + 'px';
+    const banner = $('coverBanner');
+    banner.hidden = !bannerH;
+    if (bannerH) banner.style.cssText = `left:${w / 2 - (375 * scale) / 2}px;top:${T - bannerH}px;width:${375 * scale}px;height:${bannerH}px`;
     renderer.resize();
   }
   let lastDraw = -Infinity, lastHud = -Infinity;

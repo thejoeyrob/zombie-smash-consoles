@@ -35,3 +35,6 @@ Workflows use `run number + 100`, so builds start at 101 and always beat the fir
 - iPhone bundle ID: `com.thejoeyrob.zombiesmash2` (new). The old `com.thejoeyrob.zombiesmash` record is gone.
 - Android application ID: `com.thejoeyrob.zombiesmash` (Google Play). They do not have to match across stores.
 - The iOS and listing workflows (old repo, branch `claude/zombie-smash-deployment-stores-mk88wq`) default to the new iOS bundle ID.
+
+## Console c6 (2026-11-08, branch `feat/cover-banner-c6`, not merged)
+Owner's wide banner (`phone/cover-banner.webp`) shows above the console on tall screens (only when the spare height fits the whole banner: about 430x932, 390x844, 412x915, 1080x2400). The console and game screen are not resized; they only sit lower. Layout lock baseline re-recorded for that owner-requested shift; sizes and x positions unchanged. Not yet shipped to any store.
