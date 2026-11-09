@@ -351,7 +351,9 @@
       } catch {}
     }
     // A short fanfare that owns the music until it has finished (victory, defeat, high score).
-    async stinger(name) {
+    // `then` is the track to carry on with once the fanfare is over (otherwise the last-wanted track, e.g. the boss theme, would come back).
+    async stinger(name, then) {
+      if (then) this.wantTrack = then;
       const dur = STINGS[name];
       if (!dur || this.mode === 'html') return;
       if (!this.ctx || this.ctx.state !== 'running') return;
