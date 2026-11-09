@@ -1,4 +1,4 @@
-const CACHE = 'zombie-smash-v7.62.4-c6'; // game version + console revision (raise the c-number when only the console changes)
+const CACHE = 'zombie-smash-v7.62.4-c7'; // game version + console revision (raise the c-number when only the console changes)
 const ASSETS = [
   './backdrop-wall.webp',
   './cover-banner.webp',

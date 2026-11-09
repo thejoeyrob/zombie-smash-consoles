@@ -394,7 +394,7 @@
       showPanel(
         'story',
         '',
-        '<div class="story-full"><video id="storyVideo" muted playsinline webkit-playsinline preload="auto" disablepictureinpicture aria-label="The story so far"></video></div>',
+        '<div class="story-full"><video id="storyVideo" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" muted playsinline webkit-playsinline preload="auto" disablepictureinpicture aria-label="The story so far"></video></div>',
         { closable: false },
       );
       $('overlay').classList.add('story-mode');
@@ -1008,6 +1008,7 @@
   }
   function mountSceneClip(box, s, file) {
     const v = document.createElement('video');
+    v.poster = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // blank poster: Android's WebView otherwise draws its own play triangle while a clip loads
     const originalDuration = s.duration;
     const phase = s.phase;
     let disposed = false,
