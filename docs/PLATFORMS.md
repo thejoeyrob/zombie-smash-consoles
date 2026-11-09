@@ -39,3 +39,6 @@ Workflows use `run number + 100`, so builds start at 101 and always beat the fir
 
 ## Console c6 (2026-11-08, branch `feat/cover-banner-c6`, not merged)
 Owner's wide banner (`phone/cover-banner.webp`) shows above the console on tall screens (only when the spare height fits the whole banner: about 430x932, 390x844, 412x915, 1080x2400). The console and game screen are not resized; they only sit lower. Layout lock baseline re-recorded for that owner-requested shift; sizes and x positions unchanged. Not yet shipped to any store.
+
+## iPhone update 1.0.1 (2026-11-09, owner asked for it)
+`ios-testflight.yml` now exists in this repo: it builds the iPhone app from the cartridge plus the phone console (c6 banner, c7 video fix, c5 boss music), bundle `com.thejoeyrob.zombiesmash2`, version 1.0.1, build number = run number + 200 (above the old repo's 144). It needs the four secrets APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 added to THIS repo by the owner. It uploads to TestFlight only; submitting to Apple review is a separate step. Released 1.0 (build 144) is unaffected until Apple approves a replacement.
