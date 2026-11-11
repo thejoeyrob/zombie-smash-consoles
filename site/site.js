@@ -43,3 +43,6 @@ for (const b of document.querySelectorAll('[data-open-contact]')) b.addEventList
 dlg?.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 for (const b of document.querySelectorAll('[data-close]')) b.addEventListener('click', () => dlg.close());
 const dev = document.querySelectorAll('input[name=device]'); for (const d of dev) d.value = navigator.userAgent.slice(0, 120);
+
+// Remove any service worker left behind by the old web game on this address.
+try { navigator.serviceWorker?.getRegistrations().then((rs) => rs.forEach((r) => r.unregister())); caches?.keys().then((ks) => ks.forEach((k) => caches.delete(k))); } catch (e) {}
