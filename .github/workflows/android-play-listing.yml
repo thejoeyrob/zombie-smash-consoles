@@ -26,7 +26,7 @@ jobs:
         run: |
           D="$RUNNER_TEMP/meta/$LANG_CODE"
           mkdir -p "$D/images/phoneScreenshots"
-          printf 'Zombie Smash' > "$D/title.txt"
+          cp store/play/title.txt "$D/title.txt"
           cp store/play/short-description.txt "$D/short_description.txt"
           cp store/play/full-description.txt "$D/full_description.txt"
           cp store/play/graphics/icon-512.png "$D/images/icon.png"
