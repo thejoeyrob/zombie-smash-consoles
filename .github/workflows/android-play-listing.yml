@@ -7,6 +7,12 @@ on:
       language:
         description: "Play language code of the listing"
         default: en-GB
+      track:
+        description: "Track that holds your newest release (the listing tool must find a release on it)"
+        default: alpha
+      version_code:
+        description: "Version code of the newest release on that track (see the status check)"
+        default: "105"
 jobs:
   listing:
     runs-on: ubuntu-latest
@@ -36,8 +42,10 @@ jobs:
       - name: Send to Google Play
         env:
           PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          TRACK: ${{ inputs.track }}
+          VERSION_CODE: ${{ inputs.version_code }}
         run: |
           printf '%s' "$PLAY_JSON" > "$RUNNER_TEMP/play.json"
           fastlane supply --json_key "$RUNNER_TEMP/play.json" --package_name com.thejoeyrob.zombiesmash \
-            --metadata_path "$RUNNER_TEMP/meta" --skip_upload_apk --skip_upload_aab --skip_upload_changelogs
+            --track "$TRACK" --version_code "$VERSION_CODE" --metadata_path "$RUNNER_TEMP/meta" --skip_upload_apk --skip_upload_aab --skip_upload_changelogs
           rm -f "$RUNNER_TEMP/play.json"
