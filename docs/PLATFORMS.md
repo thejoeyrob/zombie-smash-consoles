@@ -42,3 +42,6 @@ Owner's wide banner (`phone/cover-banner.webp`) shows above the console on tall 
 
 ## iPhone update 1.0.1 (2026-11-09, owner asked for it)
 `ios-testflight.yml` now exists in this repo: it builds the iPhone app from the cartridge plus the phone console (c6 banner, c7 video fix, c5 boss music), bundle `com.thejoeyrob.zombiesmash2`, version 1.0.1, build number = run number + 200 (above the old repo's 144). It needs the four secrets APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 added to THIS repo by the owner. It uploads to TestFlight only; submitting to Apple review is a separate step. Released 1.0 (build 144) is unaffected until Apple approves a replacement.
+
+## iPhone status (2026-11-15)
+App Store Connect shows version 1.0 and 1.0.1 (build 201: c6 banner, c7 video fix, c5 boss music) both READY_FOR_SALE. Public link: https://apps.apple.com/gb/app/zombie-smash/id6831593583 (Apple ID 6831593583, confirmed from App Store Connect). The website's App Store button now points to it. Promotional text is live ("iconic" wording). Next iPhone version (1.0.2) carries the new name "Zombie Smash: Dr Mantis", subtitle "JoeyRob vs Evil Dr Mantis" and the recaptioned boss screenshot (files in the old repo's appstore/metadata and appstore/screenshots).

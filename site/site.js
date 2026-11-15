@@ -1,6 +1,6 @@
 // Zombie Smash site. Edit LINKS when a store page goes live; a blank link shows "Coming soon" on that button.
 const LINKS = {
-  appStore: '',            // e.g. https://apps.apple.com/app/zombie-smash/id0000000000 (add after the App Store release)
+  appStore: 'https://apps.apple.com/gb/app/zombie-smash/id6831593583',
   googlePlay: '',          // the public Google Play link, once production access is granted
   web: 'https://play.zc2.quest',
   androidTest: 'https://play.google.com/apps/testing/com.thejoeyrob.zombiesmash',
